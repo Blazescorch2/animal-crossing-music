@@ -1,10 +1,11 @@
 (function () {
-	var audio, currentTime, notification, badgeText = '',									// Variables
+	var audio, currentTime, currentMusic, notification, badgeText = '',						// Variables
 		checkVolume, setAudioUrl, switchMusic, formatText, updateText, updateTime, init;	// Functions
 
 	audio = document.createElement('audio');
 	audio.loop = true;
 	currentTime = new Date().getHours();
+	currentMusic = localStorage['music'] ? localStorage['music'] : 'animal-forrest';
 
 	checkVolume = function () {
 		if (localStorage['volume']) {
@@ -13,17 +14,15 @@
 	};
 
 	setAudioUrl = function (file) {
-		if (localStorage['music']) {
-			audio.src = '../' + localStorage['music'] + '/' + file + '.ogg';
-		}
-		else {
-			audio.src = '../animal-forrest/' + file + '.ogg';
-		}
+		currentMusic = localStorage['music'] ? localStorage['music'] : 'animal-forrest';
+		audio.src = '../' + currentMusic + '/' + file + '.ogg';
 	};
 
 	switchMusic = function (time) {
 		notification = webkitNotifications.createNotification('clock.gif', 'Animal Crossing Music', 'It is now ' + formatText(time) + '!');
-		notification.show();
+		if (localStorage['notifications'] !== 'false') {
+			notification.show();
+		}
 		window.setTimeout(function () {
 			notification.cancel()
 		}, 4500);
@@ -37,6 +36,9 @@
 		}
 		else if (time === 0) {
 			return '12am';
+		}
+		else if (time === 12) {
+			return '12pm';
 		}
 		else if (time < 13) {
 			return time + 'am';
@@ -55,7 +57,7 @@
 		var time = new Date().getHours();
 
 		// New hour! New music and new text.
-		if (time !== currentTime && !audio.paused) {
+		if ((time !== currentTime && !audio.paused) || currentMusic !== localStorage['music']) {
 			switchMusic(time);
 			audio.play();
 			updateText(time);
@@ -71,7 +73,7 @@
 		updateTime();
 		setInterval(updateTime, 60000);
 		chrome.browserAction.setBadgeBackgroundColor({ color: [57, 230, 0, 255] });
-	}
+	};
 
 	chrome.browserAction.onClicked.addListener(function () {
 		checkVolume();

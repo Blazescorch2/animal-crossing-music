@@ -1,6 +1,6 @@
 {
 	"name": "Animal Crossing Music",
-	"version": "1.5",
+	"version": "1.7",
 	"description": "Play Animal Crossing's smooth background music in real-time throughout your day.",
 	"icons": { "19": "19.png", "32": "32.png", "48": "48.png", "128": "128.png" },
 	"browser_action": {
