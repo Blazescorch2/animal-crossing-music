@@ -1,13 +1,5 @@
 <!doctype html>
 <html>
-<!--
-Blazescorch2 notes:
- 1.8_2* Added New Leaf + New Leaf-Snowing music + radio buttons.
- 1.8_3* Added check-box to switch K.K. Slider's Saturday music on/off.
-      * Changed the "Notification" header to "Options".
- 1.8_4* No changes to this file.
--->
-
 	<head>
 		<meta charset="utf-8">
 		<title>Animal Crossing Music - Options</title>
@@ -76,9 +68,8 @@ Blazescorch2 notes:
 			<label for="new-leaf"><input id="new-leaf" type="radio" name="music">New Leaf</label>
 			<label for="new-leaf-snow"><input id="new-leaf-snow" type="radio" name="music">New Leaf Snowing</label>
 
-			<h2>Options</h2>
+			<h2>Notifications</h2>
 			<label for="notifications"><input id="notifications" type="checkbox" name="notifications">Enable notifications to pop up every hour while playing</label>
-			<label for="slider"><input id="slider" type="checkbox" name="slider">Enable K.K. Slider songs to play on Saturdays at 10pm</label>
 		</form>
 		<script>
 			(function () {
@@ -121,15 +112,11 @@ Blazescorch2 notes:
 					localStorage['music'] = 'new-leaf-snow';
 					displaySaved('Music is now New Leaf - Snowing.');
 				};
+
 				document.getElementById('notifications').onchange = function (event) {
 					localStorage['notifications'] = this.checked;
 					displaySaved('Notifications are now ' + (this.checked ? 'enabled' : 'disabled') + '.');
 				};
-					document.getElementById('slider').onchange = function (event) {
-					localStorage['slider'] = this.checked;
-					displaySaved('K.K. Slider songs are now ' + (this.checked ? 'enabled' : 'disabled') + '.');
-				};
-
 
 				if (localStorage['volume']) {
 					document.getElementById('volume').value = localStorage['volume'];
@@ -158,12 +145,6 @@ Blazescorch2 notes:
 				}
 				else {
 					document.getElementById('notifications').checked = true;
-				}
-				if (localStorage['slider']) {
-					document.getElementById('slider').checked = localStorage['volume'];
-				}
-				else {
-					document.getElementById('slider').checked = true;
 				}
 			})();
 		</script>
